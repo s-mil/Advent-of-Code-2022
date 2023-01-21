@@ -1,16 +1,23 @@
 use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
-use std::num::ParseIntError;
+use std::io::{BufRead, BufReader, Error, ErrorKind, Read};
 
-fn main() {
-    let numbers: Vec<i64> = Vec::new();
 
-    let file = File::open("input").expect("Didnt find file");
 
-    let reader = BufReader::new(file);
+fn read<R: Read>(io: R) -> Result<Vec<i64>, Error> {
+    let br = BufReader::new(io);
+    br.lines()
+        .map(|line| line.and_then(|v| v.parse().map_err(|e| Error::new(ErrorKind::InvalidData, e))))
+        .collect()
+}
 
-    for line in reader.lines() {
-        let num = line.parse::<i32>(:?);
+
+fn main() -> Result<(), Error> {
+    let vec = read(File::open("./input")?)?;
+    let max::i64 = 0;
+    for _item in _vec{
+        
+        
+
     }
-
+    Ok(())
 }
